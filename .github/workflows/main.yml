@@ -17,15 +17,16 @@ jobs:
         run: sudo apt-get install -y rpm gnupg2
 
       - name: Generate GPG key pair
-        run: gpg --batch --generate-key --pinentry-mode loopback --passphrase ${{ secrets.GPG_PASSPHRASE }} <<EOF
-              Key-Type: default
-              Subkey-Type: default
-              Name-Real: GitHub Actions
-              Name-Comment: GitHub Actions
-              Name-Email: actions@example.com
-              Expire-Date: 0
-              %commit
-              EOF
+        run: |
+          gpg --batch --generate-key --pinentry-mode loopback --passphrase "${{ secrets.GPG_PASSPHRASE }}" <<EOF
+          Key-Type: default
+          Subkey-Type: default
+          Name-Real: GitHub Actions
+          Name-Comment: GitHub Actions
+          Name-Email: actions@example.com
+          Expire-Date: 0
+          %commit
+          EOF
 
       - name: Set up GPG
         run: echo "allow-loopback-pinentry" >> ~/.gnupg/gpg.conf
@@ -41,7 +42,7 @@ jobs:
       - name: Sign RPM
         run: |
           echo "Signing RPM..."
-          gpg --batch --yes --pinentry-mode loopback --passphrase ${{ secrets.GPG_PASSPHRASE }} --detach-sign mypackage-1.0.rpm
+          gpg --batch --yes --pinentry-mode loopback --passphrase "${{ secrets.GPG_PASSPHRASE }}" --detach-sign mypackage-1.0.rpm
 
       - name: Display RPM info
         run: |
