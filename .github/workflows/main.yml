@@ -59,8 +59,8 @@ jobs:
           - Initial version
           EOF
 
-     # rpmbuild --define '_topdir .' --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_sourcedir $PWD" -bb mypackage.spec
-      # mv *.rpm mypackage-1.0.rpm
+          rpmbuild --define '_topdir .' --define "_rpmdir . " --define "_builddir . " --define "_sourcedir . " -bb mypackage.spec
+          mv *.rpm mypackage-1.0.rpm
 
       - name: Sign RPM
         run: |
