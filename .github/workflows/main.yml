@@ -55,7 +55,7 @@ jobs:
           /metadata.txt
           
           %changelog
-          * Tue Apr  5 2024 John Doe <john@example.com> 1.0-1
+          * Tue Apr  5 2024 Mike Jordan <mj23@bulls.com> 1.0-1
           - Initial version
           EOF
 
@@ -64,7 +64,7 @@ jobs:
           pwd
           ls -al 
           ls -al mypackage-1.0
-          rpmbuild --define '_topdir /home/runner/work/gpg-sign-example/gpg-sign-example' --define "_rpmdir /home/runner/work/gpg-sign-example/gpg-sign-example" --define "_builddir /home/runner/work/gpg-sign-example/gpg-sign-example" --define "_sourcedir /home/runner/work/gpg-sign-example/gpg-sign-example " -bb mypackage.spec
+          rpmbuild --define '_topdir /home/runner/work/gpg-sign-example/gpg-sign-example/BUILDROOT' --define "_rpmdir /home/runner/work/gpg-sign-example/gpg-sign-example/BUILDROOT" --define "_builddir /home/runner/work/gpg-sign-example/gpg-sign-example/BUILDROOT" --define "_sourcedir /home/runner/work/gpg-sign-example/gpg-sign-example/BUILDROOT " -bb mypackage.spec
  
           mv *.rpm mypackage-1.0.rpm
 
