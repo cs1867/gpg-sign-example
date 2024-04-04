@@ -42,6 +42,7 @@ jobs:
           Version: 1.0
           Release: 1
           Summary: My Package
+          License: MIT
 
           %description
           This is a simple package.
