@@ -36,10 +36,29 @@ jobs:
           echo "Creating a simple RPM package..."
           mkdir -p mypackage-1.0
           echo "Version: 1.0" > mypackage-1.0/metadata.txt
-          rpmbuild --define '_topdir .' --buildroot "$PWD/mypackage-1.0" --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_sourcedir $PWD" -bb <(echo '%prep')
+
+          cat <<EOF > mypackage.spec
+          Name: mypackage
+          Version: 1.0
+          Release: 1
+          Summary: My Package
+
+          %description
+          This is a simple package.
+
+          %prep
+          echo "Hello, this is the %prep section."
+
+          %files
+          /metadata.txt
+
+          %changelog
+          * Tue Apr  5 2024 John Doe <john@example.com> 1.0-1
+          - Initial version
+          EOF
+
+          rpmbuild --define '_topdir .' --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_sourcedir $PWD" -bb mypackage.spec
           mv *.rpm mypackage-1.0.rpm
-
-
 
       - name: Sign RPM
         run: |
