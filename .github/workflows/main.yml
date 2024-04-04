@@ -51,8 +51,9 @@ jobs:
           echo "Hello, this is the %prep section."
 
           %files
+          %defattr(-,root,root,-)
           /metadata.txt
-
+          
           %changelog
           * Tue Apr  5 2024 John Doe <john@example.com> 1.0-1
           - Initial version
