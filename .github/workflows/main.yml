@@ -58,6 +58,9 @@ jobs:
           * Tue Apr  5 2024 John Doe <john@example.com> 1.0-1
           - Initial version
           EOF
+
+      - name: RPM build
+        run: |              
           ls
           pwd
           rpmbuild --define '_topdir .' --define "_rpmdir . " --define "_builddir . " --define "_sourcedir . " -bb mypackage.spec
