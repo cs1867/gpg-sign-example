@@ -63,6 +63,7 @@ jobs:
         run: |              
           pwd
           ls -al 
+          ls -al mypackage-1.0
           rpmbuild --define '_topdir $PWD' --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_sourcedir $PWD " -bb mypackage.spec
  
           mv *.rpm mypackage-1.0.rpm
