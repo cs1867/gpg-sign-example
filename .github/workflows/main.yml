@@ -63,7 +63,7 @@ jobs:
         run: |              
           ls
           pwd
-          rpmbuild --define '_topdir .' --define "_rpmdir . " --define "_builddir . " --define "_sourcedir . " -bb mypackage.spec
+          rpmbuild --define '_topdir /home/runner/work/gpg-sign-example/gpg-sign-example' --define "_rpmdir /home/runner/work/gpg-sign-example/gpg-sign-example " --define "_builddir /home/runner/work/gpg-sign-example/gpg-sign-example " --define "_sourcedir /home/runner/work/gpg-sign-example/gpg-sign-example " -bb mypackage.spec
  
           mv *.rpm mypackage-1.0.rpm
 
