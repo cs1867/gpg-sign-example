@@ -1,0 +1,49 @@
+name: RPM Signing Workflow
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get install -y rpm gnupg2
+
+      - name: Generate GPG key pair
+        run: gpg --batch --generate-key --pinentry-mode loopback --passphrase ${{ secrets.GPG_PASSPHRASE }} <<EOF
+              Key-Type: default
+              Subkey-Type: default
+              Name-Real: GitHub Actions
+              Name-Comment: GitHub Actions
+              Name-Email: actions@example.com
+              Expire-Date: 0
+              %commit
+              EOF
+
+      - name: Set up GPG
+        run: echo "allow-loopback-pinentry" >> ~/.gnupg/gpg.conf
+
+      - name: Create RPM package
+        run: |
+          echo "Creating a simple RPM package..."
+          mkdir -p mypackage-1.0
+          echo "Version: 1.0" > mypackage-1.0/metadata.txt
+          rpmdev-packageroot='mypackage-1.0/' rpmbuild --define '_topdir .' --buildroot "$PWD/mypackage-1.0/" --define "_rpmdir $PWD" --define "_builddir $PWD" --define "_sourcedir $PWD" -bb <(echo '%prep')
+          mv *.rpm mypackage-1.0.rpm
+
+      - name: Sign RPM
+        run: |
+          echo "Signing RPM..."
+          gpg --batch --yes --pinentry-mode loopback --passphrase ${{ secrets.GPG_PASSPHRASE }} --detach-sign mypackage-1.0.rpm
+
+      - name: Display RPM info
+        run: |
+          echo "Displaying RPM info..."
+          rpm -qi mypackage-1.0.rpm
