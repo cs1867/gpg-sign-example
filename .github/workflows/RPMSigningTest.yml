@@ -1,0 +1,34 @@
+name: RPM Signing Test
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Import GPG Secret Key
+        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 --decode | gpg --import
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Set up GPG Configuration
+        run: echo "%_gpg_name PerfsonarGPG" > ~/.rpmmacros
+
+      - name: Install RPM Sign Tool
+        run: sudo yum install -y rpm-sign  # Adjust for your package manager if not using yum
+
+      - name: Sign RPMs
+        run: rpm --addsign unibuild-repo/RPMS/*.rpm
+
+      - name: Upload Signed RPMs as Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: signed-rpms
+          path: unibuild-repo/RPMS/*.rpm
