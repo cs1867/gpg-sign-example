@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: rhel-8
+    runs-on: rhel-8-latest
 
     steps:
       - name: Checkout Repository
