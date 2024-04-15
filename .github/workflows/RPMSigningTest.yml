@@ -63,7 +63,7 @@ jobs:
           cat ~/.rpmmacros
       
       - name: Sign RPMs
-        run: rpm --addsign mypackage-1.0
+        run: rpm --addsign mypackage-1.0/metadata.txt
 
       - name: Upload Signed RPMs as Artifacts
         uses: actions/upload-artifact@v2
