@@ -22,7 +22,7 @@ jobs:
         run: echo "%_gpg_name PerfsonarGPG" > ~/.rpmmacros
 
       - name: Install RPM Sign Tool
-        run: sudo yum install -y rpm-sign  # Adjust for your package manager if not using yum
+        run: sudo dnf install -y rpm-sign  # Adjust for your package manager if not using yum
 
       - name: Sign RPMs
         run: rpm --addsign unibuild-repo/RPMS/*.rpm
