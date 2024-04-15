@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    container:
+      options: --privileged
+      image: ghcr.io/perfsonar/docker-oneshot-builder/ol8:latest
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
