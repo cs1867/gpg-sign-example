@@ -27,7 +27,14 @@ jobs:
 
       - name: Install RPM Sign Tool
         run: yum install -y rpm-sign
-
+      
+      - name: Create RPM package
+        run: |
+          pwd
+          ls
+          echo "ls unibuild repo"
+          ls unibuild-repo/RPMS/*.rpm
+      
       - name: Sign RPMs
         run: rpm --addsign unibuild-repo/RPMS/*.rpm
 
