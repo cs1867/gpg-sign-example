@@ -28,13 +28,39 @@ jobs:
       - name: Install RPM Sign Tool
         run: dnf install -y rpm-sign
       
-      - name: Create RPM package
+      - name: Create RPM for signing
+        run: |
+          echo "Creating a simple RPM package..."
+          mkdir -p mypackage-1.0
+          echo "Version: 1.0" > mypackage-1.0/metadata.txt
+
+          cat <<EOF > mypackage.spec
+          Name: mypackage
+          Version: 1.0
+          Release: 1
+          Summary: My Package
+          License: MIT
+
+          %description
+          This is a simple package.
+
+          %prep
+          echo "Hello, this is the %prep section."
+
+          %files
+          %defattr(-,root,root,-)
+          /metadata.txt
+          
+          %changelog
+          * Tue Apr  5 2024 Mike Jordan <mj23@bulls.com> 1.0-1
+          - Initial version
+          EOF          
+      
+      - name: list RPM package
         run: |
           pwd
           ls
           cat ~/.rpmmacros
-          
-    
       
       - name: Sign RPMs
         run: rpm --addsign unibuild-repo/RPMS/*.rpm
