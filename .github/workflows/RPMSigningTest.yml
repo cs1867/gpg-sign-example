@@ -63,10 +63,10 @@ jobs:
           cat ~/.rpmmacros
       
       - name: Sign RPMs
-        run: rpm --addsign unibuild-repo/RPMS/*.rpm
+        run: rpm --addsign mypackage-1.0
 
       - name: Upload Signed RPMs as Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: signed-rpms
-          path: unibuild-repo/RPMS/*.rpm
+          path: mypackage-1.0
