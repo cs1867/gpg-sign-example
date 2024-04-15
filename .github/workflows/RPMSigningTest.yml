@@ -2,7 +2,7 @@ name: RPM Signing Test
   
 on:
   push:
-    branches:
+    branches: 
       - main  # Change this to your main branch name
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
         run: echo "%_gpg_name PerfsonarGPG" > ~/.rpmmacros
 
       - name: Install RPM Sign Tool
-        run: yum install -y rpm-sign
+        run: dnf install -y rpm-sign
       
       - name: Create RPM package
         run: |
